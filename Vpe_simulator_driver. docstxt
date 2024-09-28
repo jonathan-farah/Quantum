@@ -1,0 +1,50 @@
+This script demonstrates how to implement the Variational Quantum Eigensolver (VQE) using Qiskit and apply it to an optimization problem.
+The VQE is designed to estimate the minimum eigenvalue of a given Hamiltonian, and the script includes a callback function that prints
+intermediate results, including the eigenvector, at each iteration of the optimization process.
+
+Key Components
+VQE: A hybrid quantum-classical algorithm that approximates the ground state (lowest eigenvalue) of a Hamiltonian.
+Hamiltonian: The objective to minimize, represented as a quantum operator (in this case, built using custom ESG-related data).
+Ansatz: A parameterized quantum circuit used in VQE to represent the quantum state.
+Optimizer: The classical optimizer (COBYLA) that adjusts the parameters of the ansatz to minimize the energy (eigenvalue) of the Hamiltonian.
+Callback Function: Provides iterative feedback, including eigenvector and eigenvalue at each iteration of the optimization process.
+
+import:
+EfficientSU2: A predefined, parameterized quantum circuit ansatz from Qiskit’s circuit library, which is often used in variational algorithms like VQE.
+Estimator: A Qiskit primitive for calculating expectation values of operators.
+VQE: The Qiskit implementation of the Variational Quantum Eigensolver.
+COBYLA: A classical optimizer from Qiskit Algorithms used for adjusting the ansatz parameters in the VQE.
+objective_hamiltonian: A custom function that generates a Hamiltonian based on ESG (Environmental, Social, and Governance)
+ scores for companies (financial data is used as a proxy).
+
+ def callback(nfev, parameters, energy, sdandev):
+    """
+    This callback function is passed into VQE for printing iterative outcomes.
+    
+    Parameters:
+        nfev (int): Number of function evaluations (iterations).
+        parameters (ndarray): Current parameters of the ansatz.
+        energy (float): Current energy (eigenvalue).
+        sdandev (float): Standard deviation (not used here).
+    
+    Returns:
+        None
+    """ callback: This function is invoked after each iteration of the VQE optimization process. It prints the current iteration number, the energy (eigenvalue), and the corresponding eigenvector. The eigenvector is reversed to match the standard qubit ordering in Qiskit.
+Statevector: A utility from Qiskit that simulates the quantum circuit and returns the statevector (the quantum state in vector form).
+_reverse_statevector: Reverses the qubit ordering of the statevector to match the desired output format.
+
+ """
+    Reverses the ordering of the qubits in the statevector.
+    
+    Parameters:
+        statevector (ndarray): The statevector representing the quantum state.
+        num_qubits (int): The number of qubits in the system.
+    
+    Returns:
+        ndarray: The statevector with the qubit ordering reversed.
+    """
+
+    This script uses the Variational Quantum Eigensolver (VQE) to find the minimum eigenvalue of a Hamiltonian that is constructed 
+    based on financial (stock ticker) and ESG data. The process involves using a parameterized quantum circuit (EfficientSU2) and a 
+    classical optimizer (COBYLA) to iteratively adjust the parameters and minimize the energy. The callback function provides feedback 
+    at each iteration, printing the current eigenvalue and eigenvector.

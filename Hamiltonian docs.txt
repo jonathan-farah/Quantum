@@ -1,0 +1,71 @@
+This Python script performs optimization using a Quadratic Program (from Qiskit Optimization) to represent portfolio selection
+ based on stock returns, ESG (Environmental, Social, Governance) scores, and risk (using covariance). 
+ The objective function is encoded as an Ising Hamiltonian, which is used in quantum optimization algorithms.
+
+terms used:
+SparsePauliOp: 
+Covariance Matrix (Sigma): 
+In portfolio optimization, this matrix represents the risk (variance and covariances) of the assets in the portfolio.
+Return Vector (r): This vector represents the expected returns for each asset in the portfolio
+
+This is a sparse representation of Pauli operators (e.g., ZI, ZZ). It's used to encode the Hamiltonian in quantum optimization.
+ A test function that returns a simple Ising Hamiltonian for testing purposes.
+    
+    The Hamiltonian is represented as a sum of Pauli operators:
+    
+    H = ZZ + 0.5 * ZI + 0.25 * IZ
+    
+    :return: SparsePauliOp
+        A sparse Pauli operator that encodes the Hamiltonian.
+    :rtype: SparsePauliOp
+
+    def sample_objective_to_hamiltonian():
+    Converts a simplified objective function into an Ising Hamiltonian.
+    
+    This function defines a simple optimization problem for testing purposes.
+    The objective function includes three terms: stock returns (r), ESG scores, 
+    and a covariance matrix (Sigma). It minimizes the objective function by converting
+    it into an Ising Hamiltonian.
+    
+    :return: tuple
+        A tuple containing the Ising Hamiltonian and a constant.
+    """
+
+    def objective_hamiltonian(tickers, ESG, weights):
+    """
+    Converts a portfolio selection problem into an Ising Hamiltonian.
+    
+    This function formulates the objective function for portfolio optimization 
+    by combining stock returns, ESG scores, and risk (covariance matrix). The
+    Ising Hamiltonian can be used in quantum optimization algorithms.
+
+    :param tickers: np.array
+        A list of stock ticker symbols representing the assets in the portfolio.
+    
+    :param ESG: np.array
+        A list of ESG scores corresponding to the assets in the portfolio.
+    
+    :param weights: list
+        A list of 3 weights for the objective function components:
+        - weights[0]: Stock returns weight (lambda_1)
+        - weights[1]: Risk (covariance matrix) weight (lambda_2)
+        - weights[2]: ESG score weight (lambda_3)
+    
+    :return: SparsePauliOp
+        The Ising Hamiltonian that encodes the optimization problem.
+    :rtype: SparsePauliOp
+
+    def get_r_and_Sigma(tickers):
+    """
+    Retrieve the stock return vector (r) and covariance matrix (Sigma) for a given set of stock tickers.
+    
+    This function downloads historical stock data using `fastquant`, calculates the daily returns, and 
+    constructs the expected return vector (r) and the covariance matrix (Sigma) for the given assets.
+
+    :param tickers: list
+        A list of stock ticker symbols representing the assets in the portfolio.
+    
+    :return: tuple
+        A tuple (r, Sigma) where r is the return vector and Sigma is the covariance matrix.
+    :rtype: tuple (np.array, np.array)
+    """

@@ -1,0 +1,47 @@
+Qiskit Runtime Service: This allows the program to connect to IBM’s quantum backends.
+EstimatorV2: A Qiskit IBM Runtime tool for estimating expectation values efficiently.
+Hamiltonian: The objective function to minimize, represented in a quantum mechanical form using Pauli operators.
+Ansatz: A parameterized quantum circuit (in this case, EfficientSU2), 
+which is optimized to approximate the ground state of the Hamiltonian.
+Classical Optimizer: Uses SciPy's minimize function (with the COBYLA method) 
+to adjust the parameters of the ansatz to minimize the Hamiltonian's energy.
+Cost Function: Evaluates the energy for a given set of ansatz parameters using the estimator.
+Pass Manager: Optimizes the quantum circuit to be more efficient for a specific backend.
+
+QiskitRuntimeService: Connects to IBM Quantum backends.
+Session: Manages communication between the program and the IBM Quantum backend.
+EstimatorV2: Estimates expectation values of operators on quantum circuits.
+EfficientSU2: A built-in parameterized quantum circuit ansatz.
+SparsePauliOp: Represents Hamiltonians in terms of Pauli matrices.
+generate_preset_pass_manager: Generates a pass manager that optimizes the quantum circuit for the specific backend hardware.
+minimize: A classical optimization function from SciPy used to adjust the parameters of the quantum circuit.
+objective_hamiltonian: A custom function that generates a Hamiltonian based on input parameters
+ (e.g., financial stock data and ESG scores).
+ cost_history_dict: Tracks the history of the optimization process, including previous parameter vectors, 
+ the number of iterations, and the cost (energy) history.
+
+cost_func: Computes the energy estimate (objective function) for a given set of parameters (params) of the ansatz.
+ It uses EstimatorV2 to calculate the expectation value of the Hamiltonian. The energy value is returned to the optimizer.
+ """Return estimate of energy from estimator
+    
+    Parameters:
+        params (ndarray): Array of ansatz parameters
+        ansatz (QuantumCircuit): Parameterized ansatz circuit
+        hamiltonian (SparsePauliOp): Operator representation of Hamiltonian
+        estimator (EstimatorV2): Estimator primitive instance
+
+    Returns:
+        float: Energy estimate
+    """
+
+tickers: An array of stock ticker symbols for companies.
+ESG: A corresponding array of Environmental, Social, and Governance (ESG) scores for the companies.
+objective_hamiltonian: A function that returns the Hamiltonian based on the stock data and ESG scores. 
+The weights [1, 2, 3] define the relative importance of different terms (e.g., returns, risk, ESG scores).
+
+to minimize cost function
+Session: Opens a session with the IBM Quantum backend.
+Estimator: Creates an instance of EstimatorV2 to estimate the energy of the quantum system.
+minimize: Calls SciPy's minimize function using the cobyla method to optimize the parameters of the ansatz.
+ The objective function is cost_func, which returns the energy value for the current set of parameters.
+res.x: Outputs the optimized parameters that represent the eigenvector corresponding to the minimum eigenvalue.
